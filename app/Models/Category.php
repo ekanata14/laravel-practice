@@ -14,4 +14,8 @@ class Category extends Model
     public function blog(){
         return $this->hasMany(Blog::class);
     }
+
+    public function author(){
+        return $this->hasMany(User::class, 'user_id');
+    }
 }

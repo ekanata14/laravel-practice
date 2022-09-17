@@ -9,15 +9,18 @@ class BlogController extends Controller
 {
     public function index(){
         return view("blog", [
-            "title" => "Blog",
-            "posts" => Blog::all()
+            "title" => "All Blogs",
+            "active" => "blog",
+            "posts" => Blog::latest()->get()
         ]);
     }
 
     public function singleBlog(Blog $blog){
         return view("single-blog", [
             "title" => "Single Blog",
+            "active" => "blog",
             "post" => $blog 
         ]);
     }
+
 }
