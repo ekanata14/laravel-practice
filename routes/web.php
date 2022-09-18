@@ -1,11 +1,14 @@
 <?php
 
-use App\Models\Blog;
 use Illuminate\Support\Facades\Route;
+
+
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\userDataController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+
 use App\Models\Category;
-use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,18 +54,7 @@ Route::get('/categories', function(){
     ]);
 });
 
-Route::get('/categories/{category:slug}', function(Category $category){
-    return view('blog', [
-        "title" => "Post By Category : $category->name",
-        "active" => "categories",
-        "posts" => $category->blog->load('category', 'author')
-    ]);
-});
+Route::get('/login', [LoginController::class, 'index']); 
 
-Route::get('/author/{author:username}', function(User $author){
-    return view('blog', [
-        "title" => "Author Posts : $author->name",
-        "active" => "author",
-        "posts" => $author->blog->load('category', 'author')
-    ]);
-});
+Route::get('/register', [RegisterController::class, 'index']);
+
