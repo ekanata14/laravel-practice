@@ -7,6 +7,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\userDataController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\DashboardController;
 
 use App\Models\Category;
 
@@ -54,7 +55,11 @@ Route::get('/categories', function(){
     ]);
 });
 
-Route::get('/login', [LoginController::class, 'index']); 
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest'); 
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::get('/register', [RegisterController::class, 'index']);
+Route::post('/register', [RegisterController::class, 'store']);
 
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
