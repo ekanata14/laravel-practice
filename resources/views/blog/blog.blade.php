@@ -21,7 +21,13 @@
     @if($posts->count())
     <div class="card mb-3 text-center">
         <div class="position-absolute px-3 py-2" style="background-color:rgba(0, 0, 0, 0.7); border-bottom-right-radius: 10px;"><h5><a href="blog?category={{ $posts[0]->category->slug }}" class="text-decoration-none text-white">{{ $posts[0]->category->name }}</a></h5></div>
-        <img src="https://source.unsplash.com/1200x400/?{{ $posts[0]->category->name }}" class="card-img-top" alt="img">
+        @if($posts[0]->image)
+        <div style="max-height: 400px; overflow:hidden">
+            <img src="{{ asset('storage/' . $posts[0]->image) }}" class="card-img-top" alt="img">
+        </div>
+        @else
+            <img src="https://source.unsplash.com/1200x400/?{{ $posts[0]->category->name }}" class="card-img-top" alt="img">
+        @endif
         <div class="card-body">
         <h3 class="card-title"><a href="../blog/{{ $posts[0]->slug }}" class="text-decoration-none text-dark">{{ $posts[0]->title }}</a></h3>
         <h6 class="card-text my-3"><a href="/blog?author={{ $posts[0]->author->username }}">{{ $posts[0]->author->name }}</a> in <a href="/blog?category={{ $posts[0]->category->slug }}">{{ $posts[0]->category->name }}</a></h6>
@@ -36,7 +42,11 @@
             <div class="col-md-4">
                 <div class="card mb-3">
                     <div class="position-absolute px-3 py-2" style="background-color:rgba(0, 0, 0, 0.7); border-bottom-right-radius:10px;"><a href="/blog?category={{ $post->category->slug }}" class="text-decoration-nonef text-white">{{ $post->category->name }}</a></div>
+                    @if($post->image)
+                        <img src="{{ asset('storage/' . $post->image) }}" class="card-img-top" alt="img">
+                    @else
                     <img src="https://source.unsplash.com/800x600/?{{ $post->category->name }}" class="card-img-top" alt="img">
+                    @endif
                     <div class="card-body">
                       <h4 class="card-title"><a href="blog/{{ $post->slug }}">{{ $post->title }}</a></h4>
                       <h6 class="card-text my-3"><a href="/blog?author={{ $post->author->username }}">{{ $post->author->name }}</a>{{ $post->author->name }} in <a href="/blog?category={{ $post->category->slug }}">{{ $post->category->name }}</a></h6>

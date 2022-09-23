@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Blog extends Model
 {
     use HasFactory;
+    use \Cviebrock\EloquentSluggable\Sluggable;
 
     // protected $fillable = ['title', 'excerpt', 'body'];
     protected $guarded = ['id'];
@@ -42,6 +43,19 @@ class Blog extends Model
 
     public function author(){
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function getRouteKeyName(){
+        return 'slug';
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 
 }

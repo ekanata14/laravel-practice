@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminCategoryController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -7,7 +8,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\userDataController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardBlogController;
 
 use App\Models\Category;
 
@@ -62,4 +63,10 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('/dashboard', function(){
+    return view('dashboard.index');
+})->middleware('auth');
+
+Route::get('/dashboard/blog/checkSlug', [DashboardBlogController::class, 'checkSlug']);
+Route::resource('/dashboard/blog', DashboardBlogController::class)->middleware('auth');
+Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware('admin');

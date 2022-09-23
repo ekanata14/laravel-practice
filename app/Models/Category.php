@@ -18,4 +18,17 @@ class Category extends Model
     public function author(){
         return $this->hasMany(User::class, 'user_id');
     }
+
+    public function getRouteKeyName(){
+        return 'slug';
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
 }
